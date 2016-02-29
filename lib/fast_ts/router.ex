@@ -69,7 +69,7 @@ defmodule FastTS.Router do
 
   def register_router(module) do
     Logger.info "Registering Router module: #{inspect module}"
-    FastTS.Router.Modules.register(module)
+    FastTS.Router.ModulesRegistry.register(module)
   end
   
 end

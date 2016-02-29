@@ -61,7 +61,7 @@ defmodule FastTS.Server do
   defp stream_event(event) do
     # TODO:
     # - Catch to avoid crash and report errors
-    FastTS.Router.Modules.get
+    FastTS.Router.ModulesRegistry.get
     |> Enum.each(fn(module) -> apply(module, :stream, [event]) end)
   end
 
