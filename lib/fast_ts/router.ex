@@ -17,7 +17,7 @@ defmodule FastTS.Router do
       # accumulation (it will be done in macro __before_compile__/1
       @before_compile unquote(__MODULE__)
 
-      FastTS.Router.register_router(__MODULE__)
+      FastTS.Router.Modules.register_router(__MODULE__)
     end
   end
 
@@ -65,11 +65,6 @@ defmodule FastTS.Router do
           def unquote(pipeline_name)(), do: unquote(block)
         end
     end
-  end
-
-  def register_router(module) do
-    Logger.info "Registering Router module: #{inspect module}"
-    FastTS.Router.ModulesRegistry.register(module)
   end
   
 end

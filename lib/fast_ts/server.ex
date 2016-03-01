@@ -3,7 +3,7 @@ defmodule FastTS.Server do
   require Logger
   
   @doc """
-  Starts accepting connections on the give `port`.
+  Starts accepting connections on the given `port`.
   """
   @spec accept(port :: integer) :: no_return
   def accept(port) do
@@ -14,13 +14,13 @@ defmodule FastTS.Server do
 
   defp loop_acceptor(socket) do
     {:ok, client} = :gen_tcp.accept(socket)
+    Logger.debug "Client connected"
     pid = spawn(fn -> serve(client) end)
     :ok = :gen_tcp.controlling_process(client, pid)
     loop_acceptor(socket)
   end
 
   def serve(socket) do
-    Logger.debug "Client connected"
     result = socket |> read_message |> send_response
     case result do
       :stop ->
@@ -61,7 +61,7 @@ defmodule FastTS.Server do
   defp stream_event(event) do
     # TODO:
     # - Catch to avoid crash and report errors
-    FastTS.Router.ModulesRegistry.get
+    FastTS.Router.Modules.list
     |> Enum.each(fn(module) -> apply(module, :stream, [event]) end)
   end
 

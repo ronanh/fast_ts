@@ -1,4 +1,10 @@
 defmodule FastTS.Router.ModulesRegistry do
+  @moduledoc """
+  Router modules Registry
+
+  Simple Agent that keeps track of the Registered Router modules
+  """
+
   @doc """
   Router agent: Keeps and serves the list of router modules.
   """
@@ -9,7 +15,7 @@ defmodule FastTS.Router.ModulesRegistry do
   @doc """
   Retrieve the list of register router modules.
   """
-  def get do
+  def list do
     Agent.get(__MODULE__, fn modules -> modules end)
   end
 
@@ -17,7 +23,7 @@ defmodule FastTS.Router.ModulesRegistry do
   Register a module as FastTS router.
   """
   def register(module) do
-    Agent.update(__MODULE__, fn modules -> [module|modules] end)
+    Agent.update(__MODULE__, fn modules -> modules ++ [module] end)
   end
 
   def stop do
